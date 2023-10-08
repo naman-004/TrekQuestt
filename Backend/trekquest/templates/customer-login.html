@@ -1,0 +1,196 @@
+{% comment %} <<section id="connect" class="vh-100">
+   <div id="connect-f-div" class="form-main-con dots-left-img">
+      <div class="container overlay-content">
+         <div class="form-title-con text-center wow slideInLeft">
+            <h5>Welcome Back to TrekQuest Tours and Travels platform</h5>
+            <h2>Customer Login</h2>
+
+            <div id="form-response" class="d-none form-title-con text-center wow slideInLeft">
+               <h2> Thank You For Contacting Us, We Will Get Back To You Soon</h2>
+
+            </div>
+         </div>
+         
+         
+         <form class="form-inner-con wow slideInLeft" id="signin-form" method="POST" >
+            {% csrf_token %}
+               {{form.as_p}}
+
+            <div class="row rw-gpq rw-lg">
+               
+               <div class="col-lg-4 col-md-4 col-12">
+                  <label class="cont-label" for="email">Email</label>
+                  <input type="email"  placeholder="johnclam@email.com" name="email" id="email"> 
+               </div>
+               
+            </div>
+
+            <div class="row rw-gpq rw-lg">
+               <div class="col-lg-4 col-md-4 col-12">
+                  <label class="cont-label" for="res-password">Password</label>
+                  <input type="password"  placeholder="Password" name="res-password" id="res-password"> 
+               </div>
+               
+            </div>
+            
+            <div class="row rw-gpq">
+               <div class="col-lg-12 text-center">
+                  <button type="submit"  class="contact-btn" >Login</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</section>
+ {% endcomment %}
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+     <title>Login</title>
+     <style>
+         /* Add your CSS styles here */
+         .login {
+             height: 100vh;
+             font-family: sans-serif;
+             background-image: url("https://images.unsplash.com/photo-1606744666360-2f22c8b4a45b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1528&q=80");
+             background-size: cover;
+             background-position: center;
+         }
+         .text-color {
+             color: #000080;
+         }
+         .form-container {
+             max-width: 400px;
+             margin: 4rem auto;
+             padding: 1rem;
+             background-color: rgba(255, 255, 255, 0.25);
+             border-radius: 0.5rem;
+             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+         }
+         .form-label {
+             display: block;
+             font-size: 1rem;
+         }
+         .form-input {
+             width: 100%;
+             padding: 0.5rem 1rem;
+             margin-top: 0.25rem;
+             border: 1px solid #ccc;
+             border-radius: 0.25rem;
+             outline: none;
+         }
+         .submit-button {
+             width: 100%;
+             padding: 0.5rem 1rem;
+             background-color: #000080;
+             color: #fff;
+             font-weight: lighter;
+             text-align: center;
+             border: none;
+             border-radius: 0.25rem;
+             cursor: pointer;
+         }
+         .submit-button:hover {
+             background-color: #000060;
+         }
+         .signup-link {
+             text-align: right;
+             margin-top: 1rem;
+         }
+         .signup-link a {
+             color: #000;
+             text-decoration: none;
+         }
+         .signup-link a:hover {
+             color: #f00;
+         }
+     </style>
+ </head>
+ <body>
+     <div class="login">
+         <div class="container mx-auto h-full flex flex-1 justify-center items-center">
+             <div class="w-full max-w-lg">
+                 <div class="leading-loose form-container">
+                     <form id='signin-form' method="POST">
+                      {%csrf_token%}
+                         <p class="text-white font-medium text-center text-xl font-bold text-color">LOGIN</p>
+                         <div class="">
+                             <label class="form-label text-md text-color" for="email">Email</label>
+                             <input class="form-input" type="email" name="email" placeholder="john@gmail.com" id='email' required>
+                         </div>
+                         <div class="mt-2">
+                             <label class="form-label text-md text-color">Password</label>
+                             <input class="form-input" type="password" name="res-password" id='res-password' placeholder="enter password" aria-label="password" required>
+                         </div>
+                         <div class="mt-4 items-center flex justify-between">
+                             <button class="submit-button" type="submit">Submit</button>
+                         </div>
+                         <div class="signup-link">
+                             Not a user? <a href="/home/customer-registration/">Sign Up</a>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </body>
+ </html>
+ 
+ 
+ 
+ 
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+ 
+ {% comment %} <script>
+ $(document).ready(function() {
+    $("#home-intro-banner").addClass("d-none")
+    $("#connect-f-div").css("min-height", "90vh");
+ });
+ </script> {% endcomment %}
+ 
+ 
+ <script>
+       $(document).ready(function() {
+          $("#signin-form").submit(function(event) {
+          event.preventDefault();
+          var formData = {
+          'email': $('input[name=email]').val(),
+          'password': $('input[name=res-password]').val(),
+          };
+          //var csrftoken = jQuery("[name=csrf]").val();
+          const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+              // Send form data to Django view using AJAX
+        $.ajax({
+          type: "POST",
+          url: "/customer/login/",
+          data: formData,
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader('X-CSRFToken', csrftoken);
+          },
+          success: function(data) {
+              if (!data.error) {
+                  // registration successful
+                  console.log('Login successful');
+                  window.location.href = "/customer/tours/";
+              } else {
+                  // registration failed
+                  console.log(data.errors);
+              }
+          },
+          error: function() {
+              console.log('Error in Login');
+          }
+      });
+    
+    });
+    });
+ </script>
+ 
+ 

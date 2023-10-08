@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{%block content%}
+
+<h1 class='mt-4 text-center text-success'><b>{{searchTerm}}</b></h1>
+<div class="container mt-5">
+    <div class="row">
+        {% for card in tours %}
+        <div class="col-md-4 mb-4">
+            <div class="card tour-card" >
+                <img src="{{ card.photo.url }}" class="card-img-top" alt="Card Image {{ forloop.counter }}">
+                <div class="card-body">
+                    <a href="{% url 'tour-detail' card.id %}" class='card-title'><h3 class=" font-bold text-purple-500  hover:underline">{{ card.title }}</h3></a>
+                    <p class="card-text">
+                      <div class="row">
+                        <div class="col-md-6 ">
+                        <h6 class="px-2 py-1 font-bold bg-red-400 text-white rounded-lg hover:bg-gray-500 mr-4">{{ card.city }}📍</h6><br>
+                        <h6 class="text-green-500 font-bold bg-gray-100 rounded-full py-2 px-2 hover:text-red-500">{{ card.distance }} km</h6><br>
+                        </div>
+                        <div class="col-md-6 ">
+                        <h6 class="px-2 py-1 font-bold bg-red-400 text-white rounded-lg hover:bg-gray-500">₹{{ card.price }}</h6><br>
+                        <h6 class="text-green-500 font-bold bg-gray-100 rounded-full py-2 px-2 hover:text-red-500">{{ card.average_rating }}/5 ★</h6>
+                        </div>
+                      </div>
+                    </p>
+                    {% comment %} <p class="card-desc">{{ card.desc }}</p> {% endcomment %}
+                    <a href="{% url 'book-tour' card.id %}" class="btn btn-primary booking__btn ">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{%endblock content%}

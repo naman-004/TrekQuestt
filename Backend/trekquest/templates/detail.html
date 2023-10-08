@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- component -->
+<div class="mt-6 bg-gray-50">
+  <div class=" px-10 py-6 mx-auto">
+        
+     <div class="max-w-6xl px-10 py-6 mx-auto bg-gray-50">
+        
+    <a href="#_" class="block transition duration-200 ease-out transform hover:scale-110">
+
+          <img class="object-cover w-full shadow-sm h-full" src="{{tour.photo.url}}" alt='sorry'>
+
+    </a>
+
+    
+    <div class="flex items-center justify-start mt-4 mb-4">
+          <h2 class="px-2 py-1 font-bold bg-red-400 text-white rounded-lg hover:bg-gray-500 mr-4">★ {{tour.average_rating}}</h2>
+          <h2 class="px-2 py-1 font-bold bg-red-400 text-white rounded-lg hover:bg-gray-500 mr-4">{{tour.city}}📍</h2>
+          <h2 class="px-2 py-1 font-bold bg-red-400 text-white rounded-lg hover:bg-gray-500"> ₹{{tour.price}}</h2>
+         </div>
+        <div class="mt-2">
+       
+          <h1
+                class="font-bold text-purple-500  hover:underline">{{tour.title}}</h1>
+
+                <div class="flex justify-start items-center mt-2">
+                  <h5 class=" text-green-500 font-bold bg-gray-100 rounded-full py-2 px-2 hover:text-red-500">{{tour.distance}} <span class="text-md text-gray-400 font-bold ml-2">km</span></h5>
+        
+                
+                </div>
+
+               <div class="font-light text-gray-600">
+                
+              
+                      <h1 class="font-bold text-gray-700 hover:underline">OverView</h1>
+                  
+            </div>
+       </div>
+
+ <div class="max-w-4xl px-10  mx-auto text-2xl text-gray-700 mt-4 rounded bg-gray-100">
+
+   <div>
+          <p class="mt-2 p-8">{{tour.desc}}</p>
+     </div>
+
+     
+
+</div>
+</div>
+
+
+<!--form form comments-->
+     
+<div class="max-w-4xl py-16 xl:px-8 flex justify-center mx-auto">
+  <div class="w-full mt-16 md:mt-0 ">
+    <form class="relative z-10 h-auto p-8 py-10 overflow-hidden bg-white border-b-2 border-gray-300 rounded-lg shadow-2xl px-7" method='POST' action="{% url 'submit-review' card_id=tour.id %}">
+          {% csrf_token %}
+          <h3 class="mb-6 text-2xl font-medium text-center">Share Your Experience...</h3>
+          <textarea type="text" name="reviewText" class="w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none" placeholder="Write your comment" rows="5" cols="33"></textarea>
+          Rating:<input type='number' name='rating' class='w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none'/><br>
+          <input type="submit" value="Submit comment" name="submit" class=" text-white px-4 py-3 bg-blue-500  rounded-lg">
+      </form>
+  </div>
+</div>
+
+
+<!--comments-->
+
+<div class="max-w-4xl px-10 py-16 mx-auto bg-gray-100  bg-white min-w-screen animation-fade animation-delay  px-0 px-8 mx-auto sm:px-12 xl:px-5">
+
+<p class="mt-1 text-2xl font-bold text-left text-gray-800 sm:mx-6 sm:text-2xl md:text-3xl lg:text-4xl sm:text-center sm:mx-0">
+All reviews on this Tour
+</p>
+<!--comment 1-->
+{%for review in reviews %}
+<div class="flex  items-center w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3">
+
+
+  <div><h3 class="text-lg font-bold text-purple-500 sm:text-xl md:text-2xl">By {{review.useremail}}</h3>
+    <p class="text-sm font-bold text-gray-300">{{review.created_at}}</p>
+    <p class="mt-2 text-base text-gray-600 sm:text-lg md:text-normal">
+    {{review.reviewText}}</p>
+  </div>
+
+</div>
+{% endfor %}
+</div>
+</div>
+</div>
+</div>
+{% endblock content%}
